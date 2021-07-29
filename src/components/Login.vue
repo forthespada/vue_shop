@@ -34,8 +34,8 @@ export default {
     return {
       //登录表单的数据绑定对象
       loginForm:{
-        username:'111',
-        password:'123',
+        username:'admin',
+        password:'123456',
       },
 
     //验证登录表单的规则对象
@@ -62,8 +62,24 @@ export default {
       this.$refs.loginFormRef.resetFields();
     },
     login(){
-      this.$refs.loginFormRef.validate((vaild) => {
-        console.log(vaild)
+      this.$refs.loginFormRef.validate( async (vaild) => {
+        if(!vaild) return;//验证失败 返回
+       const {data:res} = await this.$http.post('login',this.loginForm);//目前是异步请求
+       // console.log(res)
+        // console.log(vaild)
+        if(res.meta.status !== 200)
+          //return console.log('登录失败');
+          return this.$message.error('登录失败');
+        //console.log("登录成功！");
+        this.$message.success('登录成功');
+        // 1、将登陆成功之后的token保存在客户端的 sessionStorage 中
+        // 1.1 项目中的其余组件不需再登陆成功后才能访问
+        // 1.2 token 只应该在当前打开网站生效，所以保存在sessionStorage中1
+
+        window.sessionStorage.setItem('token',res.data.token);
+
+        //通过编程式导航跳转到后台主页，路由地址是 /home
+        this.$router.push('/home');
       })
     }
   }
