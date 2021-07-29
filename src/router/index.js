@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import  Login from '../components/Login'
+import Login from '../components/Login'
 import Home from '../components/Home'//导入home组件 路由跳转
-
-Vue.use(Router)
 
 Vue.use(Router)
 
@@ -25,7 +23,6 @@ const router =  new Router({
   ]
 })
 
-export default router;
 
 //挂载路由导航守卫
 router.beforeEach((to,from,next) =>{
@@ -39,3 +36,5 @@ router.beforeEach((to,from,next) =>{
   next()//有token则直接放行好了
 
 })
+
+export default router;
