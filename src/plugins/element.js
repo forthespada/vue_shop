@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import { Button } from 'element-ui'
-import {Form,FormItem, Input} from 'element-ui'
+import {Button,Form,FormItem,Input} from 'element-ui'
 
 //导入消息提示
 import {Message} from 'element-ui'
