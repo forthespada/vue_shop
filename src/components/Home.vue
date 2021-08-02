@@ -26,6 +26,8 @@
             :unique-opened="true"
             :collapse="isCollapse"
             :collapse-transition='false'
+            :router="true"
+            :default-active="$route.path"
         >
           <!-- 一级菜单 -->
           <el-submenu v-for="item in menuList" :key="item.id" :index="item.id.toString()">
@@ -38,7 +40,7 @@
             </template>
 
             <!-- 二级菜单 -->
-              <el-menu-item v-for="subItem in item.children" :key="subItem.id" :index="subItem.id.toString()">
+              <el-menu-item v-for="subItem in item.children" :key="subItem.id" :index="'/' + subItem.path">
                 <!-- 图标 -->
                 <i class="el-icon-menu"></i>
                 <!-- 文本-->
@@ -51,8 +53,11 @@
 
       </el-aside>
 
-      <!-- 主题区 -->
-      <el-main>Main</el-main>
+      <!-- 右侧主题区 -->
+      <el-main>
+        <!-- 路由占位符 -->
+        <router-view> </router-view>
+      </el-main>
     </el-container>
   </el-container>
 
@@ -128,7 +133,7 @@ export default {
 .el-aside{
   background-color:#333744;
   .el-menu{
-    border-right: none;
+    border-right: none
   }
 }
 .el-main{
