@@ -1,9 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login'
-import Home from '../components/Home'//导入home组件 路由跳转
+import Home from '../components/Home'  //导入home组件 路由跳转
 import Welcome from '../components/Welcome'
 import Users from  '../components/user/Users'
+import Roles from '../components/role/Roles'
+import Goods from '../components/good/Goods'
+import Categories from "../components/category/Categories";
+import Orders from '../components/order/Orders'
+import Params from "../components/param/Params";
+import Reports from "../components/report/Reports";
+import Rights from "../components/right/Rights";
+
 
 Vue.use(Router)
 
@@ -24,7 +32,15 @@ const router =  new Router({
       redirect:'/welcome',
       children:[
         {path:'/welcome',component:Welcome},
-        {path:'/users',component:Users}
+        {path:'/users',component:Users},
+        {path:'/roles',component:Roles},
+        {path:'/goods',component:Goods},
+        {path:'/categories',component:Categories},
+        {path:'/orders',component:Orders},
+        {path:'/params',component:Params},
+        {path:'/reports',component:Reports},
+        {path:'/rights',component:Rights},
+        {path:'/roles',component:Roles}
       ]
     }
   ]
