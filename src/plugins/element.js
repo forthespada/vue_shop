@@ -7,6 +7,12 @@ import  {Card} from 'element-ui'
 import {Row,Col,Table,TableColumn} from 'element-ui'
 //导入消息提示
 import {Message} from 'element-ui'
+import {
+    Switch,
+    Tooltip,
+    Pagination,
+    Dialog
+} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -31,5 +37,10 @@ Vue.use(Row)
 Vue.use(Col)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Switch)
+Vue.use(Tooltip)
+
+Vue.use(Pagination)
+Vue.use(Dialog)
 
 Vue.prototype.$message = Message
