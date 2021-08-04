@@ -101,7 +101,6 @@ export default {
     },
     //点击按钮切换菜单折叠和展开
     toggleCollapse(){
-
       this.isCollapse = !this.isCollapse
     }
 
