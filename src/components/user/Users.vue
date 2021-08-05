@@ -44,7 +44,10 @@
           </el-button>
 
           <!-- 删除按钮 -->
-          <el-button size="mini" type="danger" icon="el-icon-delete" circle></el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="removeUserById(scope.row.id)">
+
+
+          </el-button>
 
           <!-- 设置按钮 -->
           <el-tooltip  effect="dark" content="分配角色" placement="top" :enterable="false">
@@ -107,11 +110,23 @@
       title="修改用户"
       :visible.sync="editDialogVisible"
       width="50%"
+      @close="editDialogClosed"
       >
-    <span>这是一段信息</span>
+    <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+      <el-form-item label="用户名" >
+        <el-input v-model="editForm.username" disabled></el-input>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email" >
+        <el-input v-model="editForm.email" ></el-input>
+      </el-form-item>
+      <el-form-item label="手机号" prop="mobile" >
+        <el-input v-model="editForm.mobile" ></el-input>
+      </el-form-item>
+    </el-form>
+
     <span slot="footer" class="dialog-footer">
     <el-button @click="editDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="editDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="editUserInfo">确 定</el-button>
   </span>
   </el-dialog>
 </div>
@@ -192,7 +207,21 @@ export default {
         ]
       },
       //查询到的用户信息对象
-      editForm:{}
+      editForm:{},
+      //修改表单的验证规则
+      editFormRules:{
+        email:[
+          {required:true,message:'请输入用户邮箱',trigger:'blur'},
+          {validator:checkEmail,trigger: 'blur'}
+        ],
+        mobile:[
+          {required:true,message:'请输入用户手机',trigger:'blur'},
+          {min:11,max:11,message:'手机号码的长度为11字符',trigger:'blur'},
+          //{validator:checkMobile,trigger: 'blur'}
+          // 手机校验规则 这里一直不通过，我就稳定了一下
+        ],
+
+      }
 
     }
   },
@@ -268,7 +297,60 @@ export default {
       this.editForm = res.data
       //console.log(this.editForm)
       this.editDialogVisible = true
-    }
+    },
+    //监听修改用户对话框的关闭事件
+    editDialogClosed(){
+     this.$refs.editFormRef.resetFields()
+
+    },
+    //修改用户信息并提交
+    editUserInfo(){
+     this.$refs.editFormRef.validate(async valid =>{
+       //console.log(valid)
+       if(!valid) return
+       //校验通过，发起修改请求
+       const {data : res} = await this.$http.put('users/'+this.editForm.id,{
+         email:this.editForm.email,
+         mobile:this.editForm.mobile
+       })
+
+       if(res.meta.status !== 200){
+         return this.$message.error('修改用户失败')
+       }
+
+       //修改成功了，关闭对话框，刷新数据列表，提示成功
+       this.editDialogVisible = false
+       this.getUserList()
+       this.$message.success('更新用户信息成功')
+     })
+
+    },
+    //根据ID删除对应的用户
+   async removeUserById(id) {
+     //先弹框询问是否删除
+     //console.log(id)
+     const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+       confirmButtonText: '确定',
+       cancelButtonText: '取消',
+       type: 'warning'
+     }).catch(err => {
+       return err
+     })
+     // 如果用户确认删除，则返回值为一个字符串 confirm,如果点击取消，则是返回一个错误消息，这个时候可以捕获该消息，然后return出去即可
+     // 捕获错误后，再点击取消 则为字符串 cancel
+
+     // console.log(confirmResult)
+     if (confirmResult !== 'confirm')
+       return this.$message.info("已经取消删除")
+
+     //发起请求删除用户
+     const {data:res} = await this.$http.delete('users/' + id)
+     if(res.meta.status !== 200){
+       return this.$message.error("删除用户失败")
+     }
+     this.$message.success('删除用户成功')//删除成功后应该刷新用户列表
+     this.getUserList()
+   }
   }
 }
 
