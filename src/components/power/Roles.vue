@@ -36,7 +36,7 @@
               <el-tag type="success">{{item2.authName}}</el-tag><i class="el-icon-caret-right"></i>
             </el-col>
             <el-col :span="18">
-              <el-tag type="warning" v-for="(item3,index3) in item2.children" :key="item3.id">
+              <el-tag type="warning" v-for="(item3,index3) in item2.children" :key="item3.id" closable @close="removeRightByID(scope.row,item3.id)">
                 {{item3.authName}}
               </el-tag>
 
@@ -95,6 +95,28 @@
          console.log(this.roleList)
 
 
+
+        },
+        //根据ID删除对应的权限
+        async removeRightByID(role,rightId){
+         //弹框提示用户是否删除权限
+            const confirmResult =  await  this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).catch(err => err)// 这里可以直接return  出去
+
+          if(confirmResult !== 'confirm'){
+            return this.$message.info("取消了删除")
+          }
+         //console.log("删除确定")
+          const {data:res}  =  await  this.$http.delete(`roles/${role.id}/rights/${rightId}`)
+
+          if(res.meta.status !== 200){
+            return this.$message.error("删除权限失败")
+          }
+          this.$message.success("删除权限成功")
+          this.getRolesList()
 
         }
       }
