@@ -5,8 +5,8 @@ import Home from '../components/Home'  //导入home组件 路由跳转
 import Welcome from '../components/Welcome'
 import Users from  '../components/user/Users'
 import Roles from '../components/power/Roles'
-import Goods from '../components/good/Goods'
-import Categories from "../components/category/Categories";
+import Goods from '../components/goods/Goods'
+import Categories from "../components/goods/Categories";
 import Orders from '../components/order/Orders'
 import Params from "../components/param/Params";
 import Reports from "../components/report/Reports";
