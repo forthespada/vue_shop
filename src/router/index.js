@@ -8,7 +8,7 @@ import Roles from '../components/power/Roles'
 import Goods from '../components/goods/Goods'
 import Categories from "../components/goods/Categories";
 import Orders from '../components/order/Orders'
-import Params from "../components/param/Params";
+import Params from "../components/goods/Params";
 import Reports from "../components/report/Reports";
 import Rights from "../components/power/Rights";
 
@@ -17,13 +17,9 @@ Vue.use(Router)
 
 const router =  new Router({
   routes:[
-    {
-      path:'/login',
-      component:Login
-    },
+    {path:'/login', component:Login},
     { // 重定向
-      path:'/',
-      redirect:'/login'
+      path:'/',  redirect:'/login'
     },
     {
       //home页面
