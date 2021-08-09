@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {Button, Form, FormItem, Input, use} from 'element-ui'
+import {Alert, Button, Form, FormItem, Input, TabPane, use} from 'element-ui'
 import {Container, Header, Aside, Main} from "element-ui";//导航菜单头部
 import  {Menu,Submenu,MenuItem} from "element-ui";  //导航左侧
 import {Breadcrumb,BreadcrumbItem} from 'element-ui'
@@ -17,7 +17,9 @@ import {
     Tree,
     Select,
     Option,
-    Cascader
+    Cascader,
+    Tabs,
+    tab
 } from 'element-ui'
 
 Vue.use(Button)
@@ -53,6 +55,11 @@ Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
+
+
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
