@@ -5,12 +5,13 @@ import Home from '../components/Home'  //导入home组件 路由跳转
 import Welcome from '../components/Welcome'
 import Users from  '../components/user/Users'
 import Roles from '../components/power/Roles'
-import Goods from '../components/goods/Goods'
+import GoodsList from '../components/goods/List'
 import Categories from "../components/goods/Categories";
 import Orders from '../components/order/Orders'
 import Params from "../components/goods/Params";
 import Reports from "../components/report/Reports";
 import Rights from "../components/power/Rights";
+import Add from '../components/goods/Add'
 
 
 Vue.use(Router)
@@ -30,13 +31,14 @@ const router =  new Router({
         {path:'/welcome',component:Welcome},
         {path:'/users',component:Users},
         {path:'/roles',component:Roles},
-        {path:'/goods',component:Goods},
+        {path:'/goods',component:GoodsList},
         {path:'/categories',component:Categories},
         {path:'/orders',component:Orders},
         {path:'/params',component:Params},
         {path:'/reports',component:Reports},
         {path:'/rights',component:Rights},
-        {path:'/roles',component:Roles}
+        {path:'/roles',component:Roles},
+        {path:'/goods/add',component:Add},
       ]
     }
   ]
