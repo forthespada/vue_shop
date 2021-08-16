@@ -19,7 +19,9 @@ import {
     Option,
     Cascader,
     Tabs,
-    tab
+    tab,
+    Step,
+    Steps
 } from 'element-ui'
 
 Vue.use(Button)
@@ -59,6 +61,8 @@ Vue.use(Cascader)
 
 Vue.use(Alert)
 Vue.use(Tabs)
+Vue.use(Steps)
+Vue.use(Step)
 Vue.use(TabPane)
 
 Vue.prototype.$message = Message
