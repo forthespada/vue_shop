@@ -28,7 +28,7 @@
 
     <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" label-position="top">
       <!-- tab栏 -->
-    <el-tabs :tab-position="'left'" v-model="activeIndex"  :before-leave="beforeTabLeave">
+    <el-tabs :tab-position="'left'" v-model="activeIndex"  :before-leave="beforeTabLeave" @tab-click="tabClicked">
       <el-tab-pane label="基本信息" name="0">
         <el-form-item label="商品名称" prop="goods_name">
           <el-input v-model="addForm.goods_name"> </el-input>
@@ -105,6 +105,8 @@ export default {
         value:'cat_id',
         children:'children'
       },
+      //动态参数列表数据
+      manyTabelData:[],
 
 
 
@@ -138,8 +140,30 @@ export default {
         return false
       }
 
+    },
+    async tabClicked(){
+      //console.log(this.activeIndex)
+      if(this.activeIndex === '1'){
+        //动态参数面板
+         const {data:res} = await this.$http.get(`categories/${this.cateId}/attributes`,{params:{sel:'many'}})
+
+        if(res.meta.status !== 200){
+          return this.$message.error("获取动态参数列表失败")
+        }
+      //console.log(res.data)
+        this.manyTabelData = res.data
+
+      }
     }
 
+  },
+  computed:{
+    cateId(){
+      if(this.addForm.goods_cat.length === 3){
+        return this.addForm.goods_cat[2];
+      }else
+        return null
+    }
   }
 }
 </script>
