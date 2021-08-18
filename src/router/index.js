@@ -7,7 +7,7 @@ import Users from  '../components/user/Users'
 import Roles from '../components/power/Roles'
 import GoodsList from '../components/goods/List'
 import Categories from "../components/goods/Categories";
-import Orders from '../components/order/Orders'
+import Order from '../components/order/Orders'
 import Params from "../components/goods/Params";
 import Reports from "../components/report/Reports";
 import Rights from "../components/power/Rights";
@@ -33,7 +33,7 @@ const router =  new Router({
         {path:'/roles',component:Roles},
         {path:'/goods',component:GoodsList},
         {path:'/categories',component:Categories},
-        {path:'/orders',component:Orders},
+        {path:'/orders',component:Order},
         {path:'/params',component:Params},
         {path:'/reports',component:Reports},
         {path:'/rights',component:Rights},
