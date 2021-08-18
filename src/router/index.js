@@ -7,7 +7,7 @@ import Users from  '../components/user/Users'
 import Roles from '../components/power/Roles'
 import GoodsList from '../components/goods/List'
 import Categories from "../components/goods/Categories";
-import Order from '../components/order/Order'
+import Order from '../components/order/Orders'
 import Params from "../components/goods/Params";
 import Reports from "../components/report/Reports";
 import Rights from "../components/power/Rights";
