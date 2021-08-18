@@ -8,7 +8,17 @@
 
 <script>
     export default {
-        name: "Orders"
+        name: "Orders",
+      data(){
+          return{
+
+          }
+      },
+      created() {
+      },
+      methods:{
+
+      },
     }
 </script>
 
