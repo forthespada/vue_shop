@@ -59,7 +59,7 @@
   <el-table-column label ="角色描述" prop="roleDesc"></el-table-column>
   <el-table-column label ="操作"  width="300px">
     <template slot-scope="scope">
-      <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
+      <el-button size="mini" type="primary" icon="el-icon-edit" @click="editRole(scope.row)">编辑</el-button>
       <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
       <el-button size="mini" type="warning" icon="el-icon-setting" @click="showSetRightDialog(scope.row)">分配权限</el-button>
     </template>
@@ -68,6 +68,26 @@
   </el-card>
 
 
+
+  <!-- 编辑角色的对话框 -->
+  <el-dialog
+      title="编辑角色"
+      :visible.sync="editDialogVisible"
+      width="50%"
+>
+    <el-form :model="editRoleForm"  :rules="editRoleRules" ref="editRuleForm" label-width="100px">
+      <el-form-item label="角色名称" prop="roleName">
+        <el-input  v-model="editRoleForm.roleName" ></el-input>
+      </el-form-item>
+      <el-form-item label="角色描述" prop="roleDesc">
+        <el-input v-model="editRoleForm.roleDesc" ></el-input>
+      </el-form-item>
+    </el-form>
+    <span slot="footer" class="dialog-footer">
+    <el-button @click="editDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="editRight">确 定</el-button>
+  </span>
+  </el-dialog>
 
 <!-- 分配权限的对话框 -->
   <el-dialog
@@ -93,6 +113,8 @@
           return{
             //所有角色列表数据
             roleList:[],
+            //编辑角色的对话框
+            editDialogVisible:false,
             //控制分配权限对话框的显示与隐藏
             setRightDialogVisible:false,
             //所有权限的数据
@@ -106,7 +128,24 @@
             defKeys:[
             ],
             //当前即将分配权限的角色Id
-            roleId:''
+            roleId:'',
+            //当前编辑的角色信息
+            editRoleForm:'',
+            //编辑当前角色的校验规则
+            editRoleRules:{
+              roleName:[{
+                required:true,message:"请输入当前角色名称"
+              }]
+
+            },
+            //确认
+            submitForm(){
+
+            },
+            //取消
+            restForm(){
+
+            }
           }
       },
       created() {
@@ -198,7 +237,42 @@
           this.$message.success('分配权限成功')
           this.getRolesList()
           this.setRightDialogVisible = false
-       }
+       },
+        //编辑用户信息
+        async editRole(row){
+         var id = row.id
+          //console.log(id)
+          this.editDialogVisible = true
+
+      const {data : res} = await this.$http.get(`roles/${row.id}`)
+      if(res.meta.status !== 200){
+        return this.$message.error('获取用户信息失败')
+      }
+      //console.log(res.data)
+          this.editRoleForm = res.data
+
+        },
+        //编辑当前权限
+        editRight(){
+         this.$refs.editRuleForm.validate(async  vaild =>{
+           if(!vaild) return
+           const {data : res} = await this.$http.put(`roles/${this.editRoleForm.roleId}`,{
+             "roleName": this.editRoleForm.roleName,
+             "roleDesc": this.editRoleForm.roleDesc
+           })
+           if(res.meta.status !== 200){
+             return this.$message.error('修改角色失败')
+           }
+
+           this.editDialogVisible = false
+           this.getRolesList()
+           this.$message.success("修改角色成功！")
+
+
+         })
+
+
+        }
 
       }
 
