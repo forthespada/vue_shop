@@ -12,7 +12,6 @@
         <el-row>
           <el-col :span="8">
             <el-input placeholder="请输入内容" >
-
               <el-button slot="append" icon="el-icon-search"></el-button>
             </el-input>
           </el-col>
@@ -65,7 +64,6 @@
         <el-form :model="addressForm" :rules="addressFormRules" ref="addressFormRef" label-width="100px">
           <el-form-item label="省市区/县" prop="address1">
             <el-cascader :options="cityData" v-model="addressForm.address1"></el-cascader>
-
           </el-form-item>
 
           <el-form-item label="详细地址" prop="address2">
