@@ -7,7 +7,6 @@
     <el-breadcrumb-item>角色列表</el-breadcrumb-item>
   </el-breadcrumb>
 
-
   <el-card>
     <!--- 添加角色按钮区 --->
     <el-row><el-col>
@@ -27,7 +26,6 @@
             {{item1.authName}}
           </el-tag><i class="el-icon-caret-right"></i>
         </el-col>
-
         <!-- 渲染二级和三级权限 -->
         <el-col :span="19">
           <!-- 通过for循环嵌套渲染二级权限 -->
@@ -159,9 +157,6 @@
          }
          this.roleList = res.data
          //console.log(this.roleList)
-
-
-
         },
         //根据ID删除对应的权限
         async removeRightByID(role,rightId){
@@ -171,27 +166,23 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).catch(err => err)// 这里可以直接return  出去
-
           if(confirmResult !== 'confirm'){
             return this.$message.info("取消了删除")
           }
          //console.log("删除确定")
           const {data:res}  =  await  this.$http.delete(`roles/${role.id}/rights/${rightId}`)
-
           if(res.meta.status !== 200){
             return this.$message.error("删除权限失败")
           }
           this.$message.success("删除权限成功")
           //this.getRolesList()
           role.children = res.data
-
         },
 
         //展示分配权限的对话框
         async showSetRightDialog(role){
          //获取所有权限列表的数值
           this.roleId = role.id
-
           const {data:res} = await this.$http.get('rights/tree')
           if(res.meta.status !== 200){
             return this.$message.error('获取权限数据失败')
